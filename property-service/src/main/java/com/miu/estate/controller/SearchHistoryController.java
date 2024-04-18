@@ -1,18 +1,15 @@
 package com.miu.estate.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.miu.estate.dto.request.SearchHistoryRequest;
 import com.miu.estate.model.SearchHistory;
 //import com.miu.estate.model.User;
 import com.miu.estate.service.SearchHistoryService;
-import com.miu.estate.utils.RequestUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
