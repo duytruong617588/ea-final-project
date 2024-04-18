@@ -1,9 +1,7 @@
 package com.miu.estate.dto.response;
 
-import com.miu.estate.model.Feature;
 import com.miu.estate.model.Property;
 //import com.miu.estate.model.User;
-import com.miu.estate.repository.FeatureRepository;
 //import com.miu.estate.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

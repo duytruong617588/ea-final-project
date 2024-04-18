@@ -3,7 +3,6 @@ package com.miu.estate.service;
 import com.miu.estate.model.SearchHistory;
 import com.miu.estate.repository.SearchHistoryRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

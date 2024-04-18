@@ -2,9 +2,11 @@ package com.miu.estate.controller;
 
 import com.miu.estate.dto.request.CreatePropertyRequest;
 import com.miu.estate.dto.request.ImageRequest;
-import com.miu.estate.model.*;
+import com.miu.estate.model.Feature;
+import com.miu.estate.model.Image;
+import com.miu.estate.model.Property;
+import com.miu.estate.model.PropertyType;
 import com.miu.estate.service.PropertyService;
-import com.miu.estate.utils.RequestUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

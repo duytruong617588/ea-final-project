@@ -1,7 +1,9 @@
 package com.miu.estate.service;
 
 import com.miu.estate.dto.response.PropertyResponse;
-import com.miu.estate.model.*;
+import com.miu.estate.model.Feature;
+import com.miu.estate.model.Property;
+import com.miu.estate.model.PropertyType;
 import com.miu.estate.repository.FeatureRepository;
 import com.miu.estate.repository.ImageRepository;
 import com.miu.estate.repository.PropertyRepository;
@@ -14,8 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static com.miu.estate.dto.response.PropertyResponse.getPropertyResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class PropertyService {
 			.forEach(property -> {
 				List<String> images = new ArrayList<>();
 //				property.getImages().forEach(image1 -> images.add(image1.getDescription()));
-				propertyResponses.add(getPropertyResponse(images, property));
+				propertyResponses.add(PropertyResponse.getPropertyResponse(images, property));
 			});
 		return propertyResponses;
 	}

@@ -1,7 +1,5 @@
 package com.miu.estate.dto.request;
 
-import com.miu.estate.model.Feature;
-import com.miu.estate.model.Image;
 import com.miu.estate.model.PropertyType;
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
