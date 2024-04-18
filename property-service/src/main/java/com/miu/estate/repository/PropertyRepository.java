@@ -27,10 +27,10 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
             "AND (:maxPrice IS NULL OR p.price <= :maxPrice) " +
             "AND (:numberOfRooms IS NULL OR p.numberOfRooms = :numberOfRooms) " +
             "AND (:propertyType IS NULL OR p.propertyType = :propertyType) " +
-            "AND (:bedrooms IS NULL OR p.feature.bedrooms = :bedrooms) " +
-            "AND (:bathrooms IS NULL OR p.feature.bathrooms = :bathrooms) " +
-            "AND (:lounges IS NULL OR p.feature.lounges = :lounges) " +
-            "AND (:storeys IS NULL OR p.feature.storeys = :storeys) " +
+            "AND (:bedrooms IS NULL OR p.bedrooms = :bedrooms) " +
+            "AND (:bathrooms IS NULL OR p.bathrooms = :bathrooms) " +
+            "AND (:lounges IS NULL OR p.lounges = :lounges) " +
+            "AND (:storeys IS NULL OR p.storeys = :storeys) " +
             "AND (p.deletedAt IS NULL)"
     )
     List<Property> getAllByCondition(@Param("location") String location,

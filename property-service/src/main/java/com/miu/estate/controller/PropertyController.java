@@ -2,7 +2,6 @@ package com.miu.estate.controller;
 
 import com.miu.estate.dto.request.CreatePropertyRequest;
 import com.miu.estate.dto.request.ImageRequest;
-import com.miu.estate.model.Feature;
 import com.miu.estate.model.Image;
 import com.miu.estate.model.Property;
 import com.miu.estate.model.PropertyType;
@@ -64,11 +63,7 @@ public class PropertyController {
 			image.setDescription(imageRequest.getDescription());
 			images.add(image);
 		}
-		Feature newFeature = new Feature();
-		newFeature.setStoreys(p.getFeature().getStoreys());
-		newFeature.setLounges(p.getFeature().getLounges());
-		newFeature.setBathrooms(p.getFeature().getBathrooms());
-		newFeature.setBedrooms(p.getFeature().getBedrooms());
+
 
 		Property property = new Property();
 		property.setLocation(p.getLocation());
@@ -79,9 +74,11 @@ public class PropertyController {
 		if (p.getPropertyType() != null) {
 			property.setPropertyType(p.getPropertyType());
 		}
-		if (newFeature != null) {
-			property.setFeature(newFeature);
-		}
+
+		property.setStoreys(p.getFeature().getStoreys());
+		property.setLounges(p.getFeature().getLounges());
+		property.setBathrooms(p.getFeature().getBathrooms());
+		property.setBedrooms(p.getFeature().getBedrooms());
 //		if (images.size() > 0) {
 //			property.setImages(images);
 //		}
@@ -103,18 +100,18 @@ public class PropertyController {
 			image.setDescription(imageRequest.getDescription());
 			images.add(image);
 		}
-		Feature newFeature = new Feature();
-		newFeature.setStoreys(p.getFeature().getStoreys());
-		newFeature.setLounges(p.getFeature().getLounges());
-		newFeature.setBathrooms(p.getFeature().getBathrooms());
-		newFeature.setBedrooms(p.getFeature().getBedrooms());
+
 		Property property = new Property();
 		property.setId(id);
 		property.setLocation(p.getLocation() != null ? p.getLocation() : currentProperty.getLocation());
 		property.setPrice(p.getPrice() != null ? p.getPrice() : currentProperty.getPrice());
 		property.setNumberOfRooms(p.getNumberOfRooms() != null ? p.getNumberOfRooms() : currentProperty.getNumberOfRooms());
 		property.setPropertyType(p.getPropertyType() != null ? p.getPropertyType() : currentProperty.getPropertyType());
-		property.setFeature(newFeature != null ? newFeature : currentProperty.getFeature());
+
+		property.setStoreys(p.getFeature().getStoreys());
+		property.setLounges(p.getFeature().getLounges());
+		property.setBathrooms(p.getFeature().getBathrooms());
+		property.setBedrooms(p.getFeature().getBedrooms());
 //		property.setImages(images.size() > 0 ? images : currentProperty.getImages());
 //		property.setPropertyOwner(userLogin.orElseThrow(() -> new RuntimeException("User not found!")));
 		return propertyService.update(id, property)

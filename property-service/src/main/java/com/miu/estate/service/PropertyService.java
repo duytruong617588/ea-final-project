@@ -1,10 +1,8 @@
 package com.miu.estate.service;
 
 import com.miu.estate.dto.response.PropertyResponse;
-import com.miu.estate.model.Feature;
 import com.miu.estate.model.Property;
 import com.miu.estate.model.PropertyType;
-import com.miu.estate.repository.FeatureRepository;
 import com.miu.estate.repository.ImageRepository;
 import com.miu.estate.repository.PropertyRepository;
 //import com.miu.estate.repository.UserRepository;
@@ -21,7 +19,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PropertyService {
 	private final PropertyRepository propertyRepository;
-	private final FeatureRepository featureRepository;
 //	private final UserRepository userRepository;
 	private final ImageRepository imageRepository;
 
@@ -40,7 +37,6 @@ public class PropertyService {
 	}
 
 	public Optional<Property> create(Property p) {
-		Feature feature = featureRepository.save(p.getFeature());
 //		User user = userRepository.save(p.getPropertyOwner());
 //		List<Image> images = new ArrayList<>();
 //		p.getImages().forEach(image -> images.add(imageRepository.save(image)));
