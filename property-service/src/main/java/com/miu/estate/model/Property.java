@@ -27,9 +27,10 @@ public class Property extends BaseEntity {
 
 	private Long userId;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "feature_id")
-	private Feature feature;
+	private int bathrooms;
+	private int bedrooms;
+	private int lounges;
+	private int storeys;
 
 //	@OneToMany
 //	@JoinColumn(name = "property_id")
