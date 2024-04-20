@@ -12,8 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
+
     @GetMapping("/list")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok().body(userService.getAll());
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        return ResponseEntity.ok().body(userService.getListProperties());
     }
 }

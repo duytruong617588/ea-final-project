@@ -6,6 +6,7 @@ import com.miu.estate.model.Image;
 import com.miu.estate.model.Property;
 import com.miu.estate.model.PropertyType;
 import com.miu.estate.service.PropertyService;
+import com.ttd.core.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PropertyController {
 	private final PropertyService propertyService;
+
+	@GetMapping("/test")
+	public ResponseEntity<List<User>> getUsers() {
+		return ResponseEntity.ok(propertyService.getUsers());
+	}
 
 	@GetMapping("/list")
 	public ResponseEntity<Page<Property>> getAll(
