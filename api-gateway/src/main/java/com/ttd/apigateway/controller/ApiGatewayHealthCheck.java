@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/health")
-public class ApiiGatewayHealthCheck {
+public class ApiGatewayHealthCheck {
     @RequestMapping("/check")
     public String healthCheck() {
         return "OK";
