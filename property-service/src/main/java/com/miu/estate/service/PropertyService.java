@@ -1,11 +1,13 @@
 package com.miu.estate.service;
 
+import com.miu.estate.client.UserClient;
 import com.miu.estate.dto.response.PropertyResponse;
 import com.miu.estate.model.Property;
 import com.miu.estate.model.PropertyType;
 import com.miu.estate.repository.ImageRepository;
 import com.miu.estate.repository.PropertyRepository;
 //import com.miu.estate.repository.UserRepository;
+import com.ttd.core.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +21,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PropertyService {
 	private final PropertyRepository propertyRepository;
-//	private final UserRepository userRepository;
 	private final ImageRepository imageRepository;
+	private final UserClient userClient;
 
 	public Page<Property> getAll(Pageable pageRequest) {
 		return propertyRepository.findAll(pageRequest);
@@ -71,5 +73,9 @@ public class PropertyService {
 				location, minPrice, maxPrice, numberOfRooms,
 				propertyType, bedrooms, bathrooms, lounges, storeys);
 		return Optional.of(properties);
+	}
+
+	public List<User> getUsers() {
+		return userClient.getUsers();
 	}
 }

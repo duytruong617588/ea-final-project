@@ -1,10 +1,12 @@
 package com.miu.estate.userservice.service;
 
 
+import com.miu.estate.userservice.client.PropertyClient;
 import com.miu.estate.userservice.model.User;
 import com.miu.estate.userservice.model.UserRole;
 import com.miu.estate.userservice.model.UserStatus;
 import com.miu.estate.userservice.repository.UserRepository;
+import com.ttd.core.model.Property;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
+    private final PropertyClient propertyClient;
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    public List<Property> getListProperties() {
+        return propertyClient.getListProperties().getContent();
     }
 
     public Optional<User> getUserById(Long id) {
