@@ -2,7 +2,7 @@ package com.miu.estate.userservice.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,13 +17,13 @@ public enum UserStatus {
 
     private final Set<Permission> permissions;
 
-//    public List<SimpleGrantedAuthority> getUserStatus() {
-//        var authorities =
-//                getPermissions().stream().map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
-//                        .collect(Collectors.toList());
-//        authorities.add(new SimpleGrantedAuthority("USER_" + this.name()));
-//        return authorities;
-//    }
+    public List<SimpleGrantedAuthority> getUserStatus() {
+        var authorities =
+                getPermissions().stream().map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                        .collect(Collectors.toList());
+        authorities.add(new SimpleGrantedAuthority("USER_" + this.name()));
+        return authorities;
+    }
 
     public static Optional<UserStatus> find(String value) {
         if (value.equals(ACTIVATED.name())) {
