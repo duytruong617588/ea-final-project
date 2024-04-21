@@ -1,9 +1,12 @@
 package com.miu.estate.service;
 
 import com.miu.estate.client.UserClient;
+import com.miu.estate.dto.request.CreatePropertyRequest;
+import com.miu.estate.dto.request.ImageRequest;
 import com.miu.estate.dto.response.PropertyResponse;
 import com.miu.estate.exception.PropertyNotFoundException;
 import com.miu.estate.exception.PublishStatusPropertyInvalidException;
+import com.miu.estate.model.Image;
 import com.miu.estate.model.Property;
 import com.miu.estate.model.PropertyType;
 import com.miu.estate.model.PublishStatus;
@@ -35,33 +38,78 @@ public class PropertyService {
 		this.propertyRepository.findAllByDeletedAtIsNull()
 			.forEach(property -> {
 				List<String> images = new ArrayList<>();
-//				property.getImages().forEach(image1 -> images.add(image1.getDescription()));
+				property.getImages().forEach(image1 -> images.add(image1.getDescription()));
 				propertyResponses.add(PropertyResponse.getPropertyResponse(images, property));
 			});
 		return propertyResponses;
 	}
 
-	public Optional<Property> create(Property p) {
-//		User user = userRepository.save(p.getPropertyOwner());
-//		List<Image> images = new ArrayList<>();
-//		p.getImages().forEach(image -> images.add(imageRepository.save(image)));
-//		p.setFeature(feature);
-//		p.setImages(images);
-//		p.setPropertyOwner(user);
-		return Optional.of(propertyRepository.save(p));
+	public Optional<Property> create(CreatePropertyRequest p) {
+		User user = userClient.getUserByToken();
+		List<Image> images = new ArrayList<>();
+		for (ImageRequest imageRequest : p.getImages()) {
+			Image image = new Image();
+			image.setUrl(imageRequest.getUrl());
+			image.setDescription(imageRequest.getDescription());
+			images.add(image);
+		}
+
+		Property property = new Property();
+		property.setLocation(p.getLocation());
+		property.setPrice(p.getPrice());
+		if (p.getNumberOfRooms() != null) {
+			property.setNumberOfRooms(p.getNumberOfRooms());
+		}
+		if (p.getPropertyType() != null) {
+			property.setPropertyType(p.getPropertyType());
+		}
+
+		property.setStoreys(p.getStoreys());
+		property.setLounges(p.getLounges());
+		property.setBathrooms(p.getBathrooms());
+		property.setBedrooms(p.getBedrooms());
+		if (images.size() > 0) {
+			property.setImages(images);
+		}
+		property.setUserId(user.getId());
+		return Optional.of(propertyRepository.save(property));
 	}
 
 	public Optional<Property> getOne(Long id) {
 		return propertyRepository.findById(id);
 	}
 
-	public Optional<Property> update(Long id, Property p) {
-		Property existingProperty = propertyRepository.findById(id).orElse(null);
-		if (existingProperty != null) {
-			return Optional.of(propertyRepository.save(p));
-		} else {
-			return Optional.empty();
+	public Optional<Property> update(Long id, CreatePropertyRequest p) {
+		User user = userClient.getUserByToken();
+		if (user == null) {
+			throw new PropertyNotFoundException("User not found!");
 		}
+		Property currentProperty = propertyRepository.getOne(id);
+		if (currentProperty == null) {
+			throw new PropertyNotFoundException("Property not found!");
+		}
+		List<Image> images = new ArrayList<>();
+		for (ImageRequest imageRequest : p.getImages()) {
+			Image image = new Image();
+			image.setUrl(imageRequest.getUrl());
+			image.setDescription(imageRequest.getDescription());
+			images.add(image);
+		}
+
+		Property property = new Property();
+		property.setId(id);
+		property.setLocation(p.getLocation() != null ? p.getLocation() : currentProperty.getLocation());
+		property.setPrice(p.getPrice() != null ? p.getPrice() : currentProperty.getPrice());
+		property.setNumberOfRooms(p.getNumberOfRooms() != null ? p.getNumberOfRooms() : currentProperty.getNumberOfRooms());
+		property.setPropertyType(p.getPropertyType() != null ? p.getPropertyType() : currentProperty.getPropertyType());
+
+		property.setStoreys(p.getStoreys());
+		property.setLounges(p.getLounges());
+		property.setBathrooms(p.getBathrooms());
+		property.setBedrooms(p.getBedrooms());
+		property.setImages(images.size() > 0 ? images : currentProperty.getImages());
+		property.setUserId(user.getId());
+		return Optional.of(propertyRepository.save(property));
 	}
 
 	public void delete(Long id) {

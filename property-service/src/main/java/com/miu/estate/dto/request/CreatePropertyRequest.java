@@ -27,7 +27,13 @@ public class CreatePropertyRequest {
     @Nullable
     private PropertyType propertyType;
     @Nullable
-    private FeatureRequest feature;
+    private int bathrooms;
+    @Nullable
+    private int bedrooms;
+    @Nullable
+    private int lounges;
+    @Nullable
+    private int storeys;
     @Nullable
     private List<ImageRequest> images;
 }

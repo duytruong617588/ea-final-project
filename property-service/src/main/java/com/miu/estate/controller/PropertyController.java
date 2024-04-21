@@ -1,5 +1,6 @@
 package com.miu.estate.controller;
 
+import com.miu.estate.client.UserClient;
 import com.miu.estate.dto.request.CreatePropertyRequest;
 import com.miu.estate.dto.request.ImageRequest;
 import com.miu.estate.model.Image;
@@ -46,11 +47,6 @@ public class PropertyController {
 		return ResponseEntity.ok(propertyService.getAll(pageRequest));
 	}
 
-//	@GetMapping
-//	public ResponseEntity<List<?>> getProperties() {
-//		return ResponseEntity.ok(propertyService.getProperties());
-//	}
-
 	@GetMapping("/{id}")
 	public ResponseEntity<Property> getOne(@PathVariable Long id) {
 		return propertyService.getOne(id)
@@ -60,67 +56,14 @@ public class PropertyController {
 
 	@PostMapping
 	public ResponseEntity<?> createOne(@RequestBody CreatePropertyRequest p, HttpServletRequest request) {
-//		Optional<User> userLogin = RequestUtil.getUserLogin(request);
-
-		List<Image> images = new ArrayList<>();
-		for (ImageRequest imageRequest : p.getImages()) {
-			Image image = new Image();
-			image.setUrl(imageRequest.getUrl());
-			image.setDescription(imageRequest.getDescription());
-			images.add(image);
-		}
-
-
-		Property property = new Property();
-		property.setLocation(p.getLocation());
-		property.setPrice(p.getPrice());
-		if (p.getNumberOfRooms() != null) {
-			property.setNumberOfRooms(p.getNumberOfRooms());
-		}
-		if (p.getPropertyType() != null) {
-			property.setPropertyType(p.getPropertyType());
-		}
-
-		property.setStoreys(p.getFeature().getStoreys());
-		property.setLounges(p.getFeature().getLounges());
-		property.setBathrooms(p.getFeature().getBathrooms());
-		property.setBedrooms(p.getFeature().getBedrooms());
-//		if (images.size() > 0) {
-//			property.setImages(images);
-//		}
-//		property.setPropertyOwner(userLogin.orElseThrow(() -> new RuntimeException("User not found!")));
-
-		return propertyService.create(property)
+		return propertyService.create(p)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.badRequest().build());
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateOne(@PathVariable Long id, @RequestBody CreatePropertyRequest p, HttpServletRequest request) {
-//		Optional<User> userLogin = RequestUtil.getUserLogin(request);
-		Property currentProperty = propertyService.getOne(id).orElseThrow(() -> new RuntimeException("Property not found!"));
-		List<Image> images = new ArrayList<>();
-		for (ImageRequest imageRequest : p.getImages()) {
-			Image image = new Image();
-			image.setUrl(imageRequest.getUrl());
-			image.setDescription(imageRequest.getDescription());
-			images.add(image);
-		}
-
-		Property property = new Property();
-		property.setId(id);
-		property.setLocation(p.getLocation() != null ? p.getLocation() : currentProperty.getLocation());
-		property.setPrice(p.getPrice() != null ? p.getPrice() : currentProperty.getPrice());
-		property.setNumberOfRooms(p.getNumberOfRooms() != null ? p.getNumberOfRooms() : currentProperty.getNumberOfRooms());
-		property.setPropertyType(p.getPropertyType() != null ? p.getPropertyType() : currentProperty.getPropertyType());
-
-		property.setStoreys(p.getFeature().getStoreys());
-		property.setLounges(p.getFeature().getLounges());
-		property.setBathrooms(p.getFeature().getBathrooms());
-		property.setBedrooms(p.getFeature().getBedrooms());
-//		property.setImages(images.size() > 0 ? images : currentProperty.getImages());
-//		property.setPropertyOwner(userLogin.orElseThrow(() -> new RuntimeException("User not found!")));
-		return propertyService.update(id, property)
+		return propertyService.update(id, p)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
 	}

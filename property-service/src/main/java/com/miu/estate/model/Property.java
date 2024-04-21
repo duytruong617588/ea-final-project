@@ -3,6 +3,8 @@ package com.miu.estate.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -32,10 +34,10 @@ public class Property extends BaseEntity {
 	private int lounges;
 	private int storeys;
 
-//	@OneToMany
-//	@JoinColumn(name = "property_id")
-//	private List<Image> images;
-//
-//	@OneToMany
-//	private List<Review> reviews;
+	@OneToMany
+	@JoinColumn(name = "property_id")
+	private List<Image> images;
+
+	@OneToMany
+	private List<Review> reviews;
 }

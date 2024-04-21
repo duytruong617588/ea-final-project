@@ -1,9 +1,12 @@
 package com.miu.estate.controller;
 
+import com.miu.estate.client.UserClient;
 import com.miu.estate.dto.request.SearchHistoryRequest;
+import com.miu.estate.exception.InvalidTokenException;
 import com.miu.estate.model.SearchHistory;
 //import com.miu.estate.model.User;
 import com.miu.estate.service.SearchHistoryService;
+import com.ttd.core.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +22,14 @@ public class SearchHistoryController {
 
     @GetMapping
     public ResponseEntity<List<SearchHistory>> getSearchHistoryByUserId(HttpServletRequest request) {
-//        Optional<User> userLogin = RequestUtil.getUserLogin(request);
-//        Long userId = userLogin.orElseThrow(() -> new RuntimeException("User not found!")).getId();
-        Long userId = 1L;
-        return searchHistoryService.getSearchHistoryByUserId(userId)
+        return searchHistoryService.getSearchHistoryByUserId()
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
     }
 
     @PostMapping
     public ResponseEntity<?> createOne(@RequestBody SearchHistoryRequest searchHistory, HttpServletRequest request) {
-        SearchHistory sh = new SearchHistory();
-//        Optional<User> userLogin = RequestUtil.getUserLogin(request);
-//        sh.setUser(userLogin.orElseThrow(() -> new RuntimeException("User not found!")));
-        sh.setParams(String.valueOf(searchHistory.getParams()));
-        return searchHistoryService.createOne(sh)
+        return searchHistoryService.createOne(searchHistory)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.badRequest().build());
     }
