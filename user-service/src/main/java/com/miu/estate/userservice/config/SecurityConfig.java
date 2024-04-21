@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/ratings/**").hasAnyRole(UserRole.USER.name())
                         .requestMatchers("/api/v1/users/**").hasAnyRole(UserRole.ADMIN.name(), UserRole.AGENT.name(), UserRole.USER.name())
                         .requestMatchers("/api/v1/admin/***").hasAnyRole(UserRole.ADMIN.name())
-                        .anyRequest().authenticated()
+//                        .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
