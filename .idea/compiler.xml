@@ -14,6 +14,7 @@
         <module name="user-service" />
         <module name="final-project" />
         <module name="service-discovery" />
+        <module name="admin-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,6 +23,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin-service" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="core" options="-parameters" />
