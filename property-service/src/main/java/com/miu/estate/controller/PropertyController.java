@@ -3,6 +3,7 @@ package com.miu.estate.controller;
 import com.miu.estate.client.UserClient;
 import com.miu.estate.dto.request.CreatePropertyRequest;
 import com.miu.estate.dto.request.ImageRequest;
+import com.miu.estate.dto.response.PropertyResponse;
 import com.miu.estate.model.Image;
 import com.miu.estate.model.Property;
 import com.miu.estate.model.PropertyType;
@@ -33,7 +34,7 @@ public class PropertyController {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<Page<Property>> getAll(
+	public ResponseEntity<List<PropertyResponse>> getAll(
 			@RequestParam Optional<Integer> pageNumber,
 			@RequestParam Optional<String> sortBy,
 			@RequestParam Optional<Integer> total

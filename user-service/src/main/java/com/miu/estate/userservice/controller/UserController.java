@@ -27,6 +27,11 @@ public class UserController {
         return ResponseEntity.ok().body(UserDetailResponse.fromUserEntity(userLogin));
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserById(@PathVariable Long userId, HttpServletRequest request) {
+        return ResponseEntity.ok().body(userService.getUserById(userId));
+    }
+
     @GetMapping("/test")
     public ResponseEntity<?> test() {
         return ResponseEntity.ok().body(userService.getListProperties());

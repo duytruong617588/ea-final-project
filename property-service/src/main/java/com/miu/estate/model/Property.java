@@ -35,9 +35,5 @@ public class Property extends BaseEntity {
 	private int storeys;
 
 	@OneToMany
-	@JoinColumn(name = "property_id")
-	private List<Image> images;
-
-	@OneToMany
 	private List<Review> reviews;
 }

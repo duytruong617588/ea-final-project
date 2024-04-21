@@ -14,4 +14,7 @@ public interface UserClient {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/users/verification")
 	User getUserByToken();
+
+	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/users/{id}")
+	User getUserById(Long id);
 }

@@ -30,30 +30,35 @@ public class PropertyService {
 	private final ImageRepository imageRepository;
 	private final UserClient userClient;
 
-	public Page<Property> getAll(Pageable pageRequest) {
-		return propertyRepository.findAll(pageRequest);
+	public List<PropertyResponse> getAll(Pageable pageRequest) {
+		List<PropertyResponse> propertyResponses = new ArrayList<>();
+		var list = propertyRepository.findAll(pageRequest);
+		list.forEach(property -> {
+			User owner = userClient.getUserById(property.getUserId());
+			List<String> images = imageRepository.findByPropertyId(property.getId())
+					.stream()
+					.map(Image::getDescription)
+					.toList();
+			propertyResponses.add(PropertyResponse.getPropertyResponse(images, property, owner));
+		});
+		return propertyResponses;
 	}
 	public List<PropertyResponse> getProperties(){
 		List<PropertyResponse> propertyResponses = new ArrayList<>();
 		this.propertyRepository.findAllByDeletedAtIsNull()
 			.forEach(property -> {
-				List<String> images = new ArrayList<>();
-				property.getImages().forEach(image1 -> images.add(image1.getDescription()));
-				propertyResponses.add(PropertyResponse.getPropertyResponse(images, property));
+				User owner = userClient.getUserById(property.getUserId());
+				List<String> images = imageRepository.findByPropertyId(property.getId())
+						.stream()
+						.map(Image::getDescription)
+						.toList();
+				propertyResponses.add(PropertyResponse.getPropertyResponse(images, property, owner));
 			});
 		return propertyResponses;
 	}
 
 	public Optional<Property> create(CreatePropertyRequest p) {
 		User user = userClient.getUserByToken();
-		List<Image> images = new ArrayList<>();
-		for (ImageRequest imageRequest : p.getImages()) {
-			Image image = new Image();
-			image.setUrl(imageRequest.getUrl());
-			image.setDescription(imageRequest.getDescription());
-			images.add(image);
-		}
-
 		Property property = new Property();
 		property.setLocation(p.getLocation());
 		property.setPrice(p.getPrice());
@@ -68,9 +73,6 @@ public class PropertyService {
 		property.setLounges(p.getLounges());
 		property.setBathrooms(p.getBathrooms());
 		property.setBedrooms(p.getBedrooms());
-		if (images.size() > 0) {
-			property.setImages(images);
-		}
 		property.setUserId(user.getId());
 		return Optional.of(propertyRepository.save(property));
 	}
@@ -88,14 +90,6 @@ public class PropertyService {
 		if (currentProperty == null) {
 			throw new PropertyNotFoundException("Property not found!");
 		}
-		List<Image> images = new ArrayList<>();
-		for (ImageRequest imageRequest : p.getImages()) {
-			Image image = new Image();
-			image.setUrl(imageRequest.getUrl());
-			image.setDescription(imageRequest.getDescription());
-			images.add(image);
-		}
-
 		Property property = new Property();
 		property.setId(id);
 		property.setLocation(p.getLocation() != null ? p.getLocation() : currentProperty.getLocation());
@@ -107,7 +101,6 @@ public class PropertyService {
 		property.setLounges(p.getLounges());
 		property.setBathrooms(p.getBathrooms());
 		property.setBedrooms(p.getBedrooms());
-		property.setImages(images.size() > 0 ? images : currentProperty.getImages());
 		property.setUserId(user.getId());
 		return Optional.of(propertyRepository.save(property));
 	}
