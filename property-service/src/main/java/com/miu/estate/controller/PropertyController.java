@@ -157,4 +157,10 @@ public class PropertyController {
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.badRequest().build());
 	}
+
+	@PutMapping("/{id}/approve/{status}")
+	public ResponseEntity<?> approvePropertyPost(@PathVariable Long id, @PathVariable String status) {
+		return ResponseEntity.ok(propertyService.changePublishStatusProperty(id, status));
+	}
+
 }

@@ -2,8 +2,11 @@ package com.miu.estate.service;
 
 import com.miu.estate.client.UserClient;
 import com.miu.estate.dto.response.PropertyResponse;
+import com.miu.estate.exception.PropertyNotFoundException;
+import com.miu.estate.exception.PublishStatusPropertyInvalidException;
 import com.miu.estate.model.Property;
 import com.miu.estate.model.PropertyType;
+import com.miu.estate.model.PublishStatus;
 import com.miu.estate.repository.ImageRepository;
 import com.miu.estate.repository.PropertyRepository;
 //import com.miu.estate.repository.UserRepository;
@@ -77,5 +80,12 @@ public class PropertyService {
 
 	public List<User> getUsers() {
 		return userClient.getUsers();
+	}
+
+	public Property changePublishStatusProperty(Long id, String status) {
+		var property = propertyRepository.findById(id).orElseThrow(new PropertyNotFoundException());
+		var publishStatus = PublishStatus.find(status).orElseThrow(new PublishStatusPropertyInvalidException());
+		property.setPublishStatus(publishStatus);
+		return propertyRepository.save(property);
 	}
 }
