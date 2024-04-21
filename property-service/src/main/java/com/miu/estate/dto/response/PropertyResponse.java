@@ -37,12 +37,6 @@ public class PropertyResponse {
                 .propertyType(String.valueOf(property.getPropertyType()))
                 .price(property.getPrice())
                 .status(String.valueOf(property.getStatus()))
-//                .feature(FeatureResponse.builder()
-//                        .bathrooms(property.getFeature().getBathrooms())
-//                        .bedrooms(property.getFeature().getBedrooms())
-//                        .storeys(property.getFeature().getStoreys())
-//                        .lounges(property.getFeature().getLounges())
-//                        .build())
                 .images(imageResponses)
                 .build();
     }

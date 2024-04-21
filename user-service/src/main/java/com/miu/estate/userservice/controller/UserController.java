@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/verification")
-    public ResponseEntity<?> getUserById(HttpServletRequest request) {
+    public ResponseEntity<?> getUserByToken(HttpServletRequest request) {
         User userLogin = RequestUtil.getUserLogin(request).orElseThrow(() -> new RuntimeException("User not found!"));
         return ResponseEntity.ok().body(UserDetailResponse.fromUserEntity(userLogin));
     }

@@ -11,4 +11,7 @@ import java.util.List;
 public interface UserClient {
 	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/users/list")
 	List<User> getUsers();
+
+	@RequestMapping(method = RequestMethod.GET, value = "/api/v1/users/verification")
+	User getUserByToken();
 }
