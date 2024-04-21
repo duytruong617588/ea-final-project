@@ -24,11 +24,12 @@ public class ImageController {
     @PostMapping("/upload")
     public ResponseEntity<ImageResponse> uploadImage(
             @RequestParam("file") MultipartFile file,
-            @RequestParam String description
+            @RequestParam String description,
+            @RequestParam Long propertyId
     ) {
         ImageResponse response = new ImageResponse();
         try {
-            Image image = imageService.saveImage(file, description);
+            Image image = imageService.saveImage(file, description, propertyId);
             response.setUrl(image.getUrl());
             response.setDescription(image.getDescription());
             response.setMessage("File uploaded successfully");

@@ -19,7 +19,7 @@ public class ImageService {
     private final ImageRepository imageRepository;
 
 
-    public Image saveImage(MultipartFile file, String description) throws FileNotFoundException {
+    public Image saveImage(MultipartFile file, String description, Long propertyId) throws FileNotFoundException {
         String fileName = generateFileName(file.getOriginalFilename());
         String property = System.getProperty("file.separator");
         String directoryPath = ImageService.getClassDirectoryPath(ImageService.class);
@@ -36,6 +36,7 @@ public class ImageService {
             Image image = new Image();
             image.setUrl(filePath);
             image.setDescription(description);
+            image.setPropertyId(propertyId);
             newImage = imageRepository.save(image);
         } catch (IOException e) {
             throw new RuntimeException(e);

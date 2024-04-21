@@ -19,9 +19,7 @@ public class Review {
 
     private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "property_id")
-    private Property property;
+    private Long propertyId;
     private String createdDate;
     private String updatedDate;
     private boolean active;
