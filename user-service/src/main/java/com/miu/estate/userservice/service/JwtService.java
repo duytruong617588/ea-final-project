@@ -1,13 +1,13 @@
 package com.miu.estate.userservice.service;
 
+import com.miu.estate.userservice.exception.InvalidTokenException;
 import com.miu.estate.userservice.model.User;
 import com.miu.estate.userservice.repository.UserRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +56,24 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(getSecretKey())
+                    .build()
+                    .parse(token);
+            return true;
+        } catch (MalformedJwtException ex) {
+            throw new InvalidTokenException("Invalid token");
+        } catch (ExpiredJwtException ex) {
+            throw new InvalidTokenException("Expired token");
+        } catch (UnsupportedJwtException ex) {
+            throw new InvalidTokenException("Unsupported token");
+        } catch (IllegalArgumentException ex) {
+            throw new InvalidTokenException("Illegal token");
+        }
     }
 
     private String buildToken(
