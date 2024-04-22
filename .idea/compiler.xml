@@ -15,6 +15,7 @@
         <module name="final-project" />
         <module name="service-discovery" />
         <module name="admin-service" />
+        <module name="notification-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -28,6 +29,7 @@
       <module name="config-server" options="-parameters" />
       <module name="core" options="-parameters" />
       <module name="final-project" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
       <module name="property-service" options="-parameters" />
       <module name="service-discovery" options="-parameters" />
       <module name="user-service" options="-parameters" />
