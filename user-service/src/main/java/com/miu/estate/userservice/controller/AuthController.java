@@ -11,6 +11,7 @@ import com.miu.estate.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final JwtService jwtService;
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         User userLogin = userService.findUserByEmail(loginRequest.getEmail()).orElseThrow(() -> new RuntimeException("User not found!"));
-        if (!userLogin.getPassword().equals(loginRequest.getPassword())) {
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), userLogin.getPassword())) {
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).body("Invalid password!");
         }
         return ResponseEntity.ok(jwtService.generateToken(userLogin));
