@@ -15,8 +15,8 @@ public class User {
 	private Boolean isApproved = false;
 	private Boolean active = true;
 
-	private String role;
-	private String status;
-//
-//	private Address address;
+	private UserRole role;
+	private UserStatus status;
+
+	private Address address;
 }
