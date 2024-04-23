@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Setter
@@ -27,6 +28,10 @@ public class User extends BaseEntity implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
+
+    @Column(columnDefinition = "integer default 0")
+    private int failedLoginAttempts = 0;
+    private LocalDateTime lockTime;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;

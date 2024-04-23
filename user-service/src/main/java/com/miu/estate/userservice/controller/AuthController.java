@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -26,8 +28,15 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         User userLogin = userService.findUserByEmail(loginRequest.getEmail()).orElseThrow(() -> new RuntimeException("User not found!"));
 
+        if (userLogin.getFailedLoginAttempts() >= 5 && userLogin.getLockTime() != null && userLogin.getLockTime().isAfter(LocalDateTime.now())) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(401)).body("Account is locked!");
+        }
         if (!passwordEncoder.matches(loginRequest.getPassword(), userLogin.getPassword())) {
+            userService.updateFailedLoginAttempts(userLogin);
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).body("Invalid password!");
+        }
+        if (userLogin.getFailedLoginAttempts() >= 5 && userLogin.getLockTime() != null && userLogin.getLockTime().isBefore(LocalDateTime.now())) {
+            userService.resetFailedLoginAttempts(userLogin);
         }
         return ResponseEntity.ok(jwtService.generateToken(userLogin));
     }
