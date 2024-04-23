@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,20 @@ public class UserService {
     private final UserRepository userRepository;
     private final PropertyClient propertyClient;
     private final PasswordEncoder passwordEncoder;
+
+    public void updateFailedLoginAttempts(User user) {
+        user.setFailedLoginAttempts(user.getFailedLoginAttempts() + 1);
+        if (user.getFailedLoginAttempts() >= 5) {
+            user.setLockTime(LocalDateTime.now().plusSeconds(30));
+        }
+        userRepository.save(user);
+    }
+
+    public void resetFailedLoginAttempts(User user) {
+        user.setFailedLoginAttempts(0);
+        user.setLockTime(null);
+        userRepository.save(user);
+    }
 
     public List<User> getAll() {
         return userRepository.findAll();
