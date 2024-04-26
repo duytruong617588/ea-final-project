@@ -1,5 +1,6 @@
 package com.miu.estate.dto.response;
 
+import com.miu.estate.model.Image;
 import com.miu.estate.model.Property;
 //import com.miu.estate.model.User;
 //import com.miu.estate.repository.UserRepository;
@@ -26,13 +27,14 @@ public class PropertyResponse {
     private String status;
     private Long price;
     private FeatureResponse feature;
-    private List<String> images;
+    private List<Image> images;
     private List<Review> reviews;
     private User owner;
 
-    public static PropertyResponse getPropertyResponse(List<String> imageResponses,
+    public static PropertyResponse getPropertyResponse(List<Image> imageResponses,
                                                        Property property,
-                                                       User owner) {
+                                                       User owner,
+                                                       List<Review> reviews) {
 
         return PropertyResponse.builder()
                 .id(property.getId())
@@ -45,6 +47,7 @@ public class PropertyResponse {
                 .status(String.valueOf(property.getStatus()))
                 .images(imageResponses)
                 .owner(owner)
+                .reviews(reviews)
                 .build();
     }
 }

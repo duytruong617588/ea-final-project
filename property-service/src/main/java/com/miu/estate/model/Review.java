@@ -23,6 +23,5 @@ public class Review {
     private String createdDate;
     private String updatedDate;
     private boolean active;
-    private boolean deleted;
     private String deletedDate;
 }

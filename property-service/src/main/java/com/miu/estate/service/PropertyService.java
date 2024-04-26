@@ -6,13 +6,11 @@ import com.miu.estate.dto.request.ImageRequest;
 import com.miu.estate.dto.response.PropertyResponse;
 import com.miu.estate.exception.PropertyNotFoundException;
 import com.miu.estate.exception.PublishStatusPropertyInvalidException;
-import com.miu.estate.model.Image;
-import com.miu.estate.model.Property;
-import com.miu.estate.model.PropertyType;
-import com.miu.estate.model.PublishStatus;
+import com.miu.estate.model.*;
 import com.miu.estate.repository.ImageRepository;
 import com.miu.estate.repository.PropertyRepository;
 //import com.miu.estate.repository.UserRepository;
+import com.miu.estate.repository.ReviewRepository;
 import com.ttd.core.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +27,7 @@ public class PropertyService {
 	private final PropertyRepository propertyRepository;
 	private final ImageRepository imageRepository;
 	private final UserClient userClient;
+	private final ReviewRepository reviewRepository;
 
 	public List<PropertyResponse> getAll(Pageable pageRequest) {
 		List<PropertyResponse> propertyResponses = new ArrayList<>();
@@ -39,11 +38,9 @@ public class PropertyService {
 					.filter(user -> user.getId().equals(property.getUserId()))
 					.findFirst()
 					.orElse(null);
-			List<String> images = imageRepository.findByPropertyId(property.getId())
-					.stream()
-					.map(Image::getDescription)
-					.toList();
-			propertyResponses.add(PropertyResponse.getPropertyResponse(images, property, owner));
+			List<Image> images = imageRepository.findByPropertyId(property.getId());
+			List<Review> reviews = reviewRepository.findByPropertyId(property.getId());
+			propertyResponses.add(PropertyResponse.getPropertyResponse(images, property, owner, reviews));
 		});
 		return propertyResponses;
 	}
@@ -52,11 +49,9 @@ public class PropertyService {
 		this.propertyRepository.findAllByDeletedAtIsNull()
 			.forEach(property -> {
 				User owner = userClient.getUserDetailById(property.getUserId());
-				List<String> images = imageRepository.findByPropertyId(property.getId())
-						.stream()
-						.map(Image::getDescription)
-						.toList();
-				propertyResponses.add(PropertyResponse.getPropertyResponse(images, property, owner));
+				List<Image> images = imageRepository.findByPropertyId(property.getId());
+				List<Review> reviews = reviewRepository.findByPropertyId(property.getId());
+				propertyResponses.add(PropertyResponse.getPropertyResponse(images, property, owner, reviews));
 			});
 		return propertyResponses;
 	}
