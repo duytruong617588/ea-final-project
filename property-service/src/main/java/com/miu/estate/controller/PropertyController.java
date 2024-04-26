@@ -1,5 +1,6 @@
 package com.miu.estate.controller;
 
+import com.miu.estate.aspect.PropertyAnnotation;
 import com.miu.estate.client.UserClient;
 import com.miu.estate.dto.request.CreatePropertyRequest;
 import com.miu.estate.dto.request.ImageRequest;
@@ -62,6 +63,7 @@ public class PropertyController {
 				.orElse(ResponseEntity.badRequest().build());
 	}
 
+	@PropertyAnnotation
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateOne(@PathVariable Long id, @RequestBody CreatePropertyRequest p, HttpServletRequest request) {
 		return propertyService.update(id, p)

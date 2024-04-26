@@ -19,7 +19,7 @@ public class FavoriteProperyController {
     }
 
     @PostMapping("/add")
-    public void addFavoriteProperty(Long propertyId) {
+    public void addFavoriteProperty(@RequestBody Long propertyId) {
         favoritePropertyService.addFavoriteProperty(propertyId);
     }
 
