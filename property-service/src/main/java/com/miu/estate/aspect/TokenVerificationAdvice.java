@@ -12,7 +12,7 @@ public class TokenVerificationAdvice extends ResponseEntityExceptionHandler {
 
     @Pointcut("within(com.miu.estate.controller.*.*)")
     public void allControllerMethods() {
-
+        System.out.println("All controller methods");
     }
 
     private final HttpServletRequest request;
@@ -20,7 +20,7 @@ public class TokenVerificationAdvice extends ResponseEntityExceptionHandler {
     @Before("allControllerMethods()")
     public void validateToken() {
         String token = request.getHeader("Authorization");
-
+        System.out.println("Token: " + token);
         if (token == null || !isValidToken(token)) {
             throw new TokenVerificationException("Invalid or missing token");
         }

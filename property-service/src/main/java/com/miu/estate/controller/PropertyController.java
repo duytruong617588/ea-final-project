@@ -49,7 +49,7 @@ public class PropertyController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Property> getOne(@PathVariable Long id) {
+	public ResponseEntity<PropertyResponse> getOne(@PathVariable Long id) {
 		return propertyService.getOne(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.badRequest().build());

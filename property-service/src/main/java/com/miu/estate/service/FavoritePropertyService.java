@@ -6,6 +6,7 @@ import com.miu.estate.model.FavoriteProperty;
 import com.miu.estate.model.Property;
 import com.miu.estate.repository.FavoritePropertyRepository;
 import com.ttd.core.model.User;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,9 +21,10 @@ import java.util.List;
 public class FavoritePropertyService {
     private final FavoritePropertyRepository favoritePropertyRepository;
     private final UserClient userClient;
+    private final HttpServletRequest request;
 
     public void addFavoriteProperty(Long propertyId) {
-        User user = userClient.getUserByToken();
+        User user = userClient.getUserByToken(request.getHeader("Authorization"));
         if (user == null) {
             throw new InvalidTokenException("User not found");
         }
@@ -33,7 +35,7 @@ public class FavoritePropertyService {
     }
 
     public void removeFavoriteProperty(Long propertyId) {
-        User user = userClient.getUserByToken();
+        User user = userClient.getUserByToken(request.getHeader("Authorization"));
         if (user == null) {
             throw new InvalidTokenException("User not found");
         }
@@ -42,7 +44,7 @@ public class FavoritePropertyService {
     }
 
     public List<FavoriteProperty> getFavoriteProperties() {
-        User user = userClient.getUserByToken();
+        User user = userClient.getUserByToken(request.getHeader("Authorization"));
         if (user == null) {
             throw new InvalidTokenException("User not found");
         }

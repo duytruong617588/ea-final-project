@@ -29,7 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/properties/{id}").permitAll()
                         .requestMatchers("/api/v1/properties/search?*").permitAll()
                         .requestMatchers("/api/v1/users/all").permitAll()
-                        .requestMatchers("/api/v1/users/detail").permitAll()
+                        .requestMatchers("/api/v1/users/detail/{id}").permitAll()
                         .requestMatchers("/api/v1/agents/**").hasAnyRole(UserRole.ADMIN.name(), UserRole.AGENT.name(), UserRole.USER.name())
                         .requestMatchers("/api/v1/favorite-properties/**").hasAnyRole(UserRole.ADMIN.name(), UserRole.AGENT.name(), UserRole.USER.name())
                         .requestMatchers("/api/v1/images/**").hasAnyRole(UserRole.ADMIN.name(), UserRole.AGENT.name())

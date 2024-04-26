@@ -125,3 +125,37 @@ INSERT INTO `review` (`id`,`comment`,`rating`,`property_id`,`is_approved`,`user_
 INSERT INTO `review` (`id`,`comment`,`rating`,`property_id`,`is_approved`,`user_id`,`created_date`,`active`) VALUES (46,'Review 46',5,10,1,1,'2024-04-10 23:53:08.966169',1);
 INSERT INTO `review` (`id`,`comment`,`rating`,`property_id`,`is_approved`,`user_id`,`created_date`,`active`) VALUES (47,'Review 47',4,10,1,2,'2024-04-10 23:53:08.966169',1);
 INSERT INTO `review` (`id`,`comment`,`rating`,`property_id`,`is_approved`,`user_id`,`created_date`,`active`) VALUES (48,'Review 48',3,10,1,3,'2024-04-10 23:53:08.966169',1);
+-- insert favorite-property: user_id, property_id
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (1,1);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (1,2);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (1,3);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (1,4);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (1,5);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (1,6);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (1,7);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (2,1);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (2,2);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (2,3);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (2,4);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (2,5);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (2,6);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (2,7);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (3,1);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (3,2);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (3,3);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (3,4);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (3,5);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (3,6);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (3,7);
+INSERT INTO `favorite_property` (`user_id`,`property_id`) VALUES (4,1);
+-- public class search-history: id, user_id, params (is a json object)
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (1,1,'{"location":"Location1","property_type":"1","min_price":"1000","max_price":"2000","number_of_rooms":"1","bathrooms":"1","bedrooms":"1","lounges":"1","storeys":"1"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (2,1,'{"location":"Location2","property_type":"2","min_price":"2000","max_price":"3000","number_of_rooms":"2","bathrooms":"2","bedrooms":"2","lounges":"2","storeys":"2"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (3,1,'{"location":"Location3","property_type":"3","min_price":"3000","max_price":"4000","number_of_rooms":"3","bathrooms":"3","bedrooms":"3","lounges":"3","storeys":"3"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (4,1,'{"location":"Location4","property_type":"4","min_price":"4000","max_price":"5000","number_of_rooms":"4","bathrooms":"4","bedrooms":"4","lounges":"4","storeys":"4"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (5,1,'{"location":"Location5","property_type":"5","min_price":"5000","max_price":"6000","number_of_rooms":"5","bathrooms":"5","bedrooms":"5","lounges":"5","storeys":"5"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (6,1,'{"location":"Location6","property_type":"6","min_price":"6000","max_price":"7000","number_of_rooms":"6","bathrooms":"6","bedrooms":"6","lounges":"6","storeys":"6"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (7,1,'{"location":"Location7","property_type":"7","min_price":"7000","max_price":"8000","number_of_rooms":"7","bathrooms":"7","bedrooms":"7","lounges":"7","storeys":"7"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (8,2,'{"location":"Location8","property_type":"8","min_price":"8000","max_price":"9000","number_of_rooms":"8","bathrooms":"8","bedrooms":"8","lounges":"8","storeys":"8"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (9,2,'{"location":"Location9","property_type":"9","min_price":"9000","max_price":"10000","number_of_rooms":"9","bathrooms":"9","bedrooms":"9","lounges":"9","storeys":"9"}');
+INSERT INTO `search_history` (`id`,`user_id`,`params`) VALUES (10,2,'{"location":"Location10","property_type":"10","min_price":"10000","max_price":"11000","number_of_rooms":"10","bathrooms":"10","bedrooms":"10","lounges":"10","storeys":"10"}');

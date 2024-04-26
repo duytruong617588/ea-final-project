@@ -2,6 +2,8 @@ package com.miu.estate.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class Property extends BaseEntity {
 	private int lounges;
 	private int storeys;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	private List<Review> reviews;
 }
