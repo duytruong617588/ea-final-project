@@ -27,6 +27,24 @@ services:
         retries: 10
       volumes:
         - user_db:/var/lib/mysql/
+
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    hostname: 'rabbitmq'
+    environment:
+      - 'RABBITMQ_DEFAULT_USER=user'
+      - 'RABBITMQ_DEFAULT_PASS=1'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq/
+
 volumes:
   property_db:
   user_db:
+  rabbitmq:
