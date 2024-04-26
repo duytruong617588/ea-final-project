@@ -11,4 +11,6 @@ public interface FavoritePropertyRepository extends JpaRepository <FavoritePrope
     FavoriteProperty findByUserIdAndPropertyId(Long userId, Long propertyId);
 
     List<FavoriteProperty> findByUserId(Long userId);
+
+    List<FavoriteProperty> findAllByPropertyId(Long propertyId);
 }

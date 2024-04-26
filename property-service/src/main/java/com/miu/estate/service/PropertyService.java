@@ -99,19 +99,19 @@ public class PropertyService {
 		if (currentProperty == null) {
 			throw new PropertyNotFoundException("Property not found!");
 		}
-		Property property = new Property();
-		property.setId(id);
-		property.setLocation(p.getLocation() != null ? p.getLocation() : currentProperty.getLocation());
-		property.setPrice(p.getPrice() != null ? p.getPrice() : currentProperty.getPrice());
-		property.setNumberOfRooms(p.getNumberOfRooms() != null ? p.getNumberOfRooms() : currentProperty.getNumberOfRooms());
-		property.setPropertyType(p.getPropertyType() != null ? p.getPropertyType() : currentProperty.getPropertyType());
+//		Property property = new Property();
+//		property.setId(id);
+		currentProperty.setLocation(p.getLocation() != null ? p.getLocation() : currentProperty.getLocation());
+		currentProperty.setPrice(p.getPrice() != null ? p.getPrice() : currentProperty.getPrice());
+		currentProperty.setNumberOfRooms(p.getNumberOfRooms() != null ? p.getNumberOfRooms() : currentProperty.getNumberOfRooms());
+		currentProperty.setPropertyType(p.getPropertyType() != null ? p.getPropertyType() : currentProperty.getPropertyType());
 
-		property.setStoreys(p.getStoreys());
-		property.setLounges(p.getLounges());
-		property.setBathrooms(p.getBathrooms());
-		property.setBedrooms(p.getBedrooms());
-		property.setUserId(user.getId());
-		return Optional.of(propertyRepository.save(property));
+		currentProperty.setStoreys(p.getStoreys());
+		currentProperty.setLounges(p.getLounges());
+		currentProperty.setBathrooms(p.getBathrooms());
+		currentProperty.setBedrooms(p.getBedrooms());
+		currentProperty.setUserId(user.getId());
+		return Optional.of(propertyRepository.save(currentProperty));
 	}
 
 	public void delete(Long id) {
