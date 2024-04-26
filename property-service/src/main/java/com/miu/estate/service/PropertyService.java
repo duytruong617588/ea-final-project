@@ -33,8 +33,12 @@ public class PropertyService {
 	public List<PropertyResponse> getAll(Pageable pageRequest) {
 		List<PropertyResponse> propertyResponses = new ArrayList<>();
 		var list = propertyRepository.findAll(pageRequest);
+		List<User> users = userClient.getAllUsers();
 		list.forEach(property -> {
-			User owner = userClient.getUserById(property.getUserId());
+			User owner = users.stream()
+					.filter(user -> user.getId().equals(property.getUserId()))
+					.findFirst()
+					.orElse(null);
 			List<String> images = imageRepository.findByPropertyId(property.getId())
 					.stream()
 					.map(Image::getDescription)
@@ -47,7 +51,7 @@ public class PropertyService {
 		List<PropertyResponse> propertyResponses = new ArrayList<>();
 		this.propertyRepository.findAllByDeletedAtIsNull()
 			.forEach(property -> {
-				User owner = userClient.getUserById(property.getUserId());
+				User owner = userClient.getUserDetailById(property.getUserId());
 				List<String> images = imageRepository.findByPropertyId(property.getId())
 						.stream()
 						.map(Image::getDescription)
@@ -120,7 +124,7 @@ public class PropertyService {
 	}
 
 	public List<User> getUsers() {
-		return userClient.getUsers();
+		return userClient.getAllUsers();
 	}
 
 	public Property changePublishStatusProperty(Long id, String status) {

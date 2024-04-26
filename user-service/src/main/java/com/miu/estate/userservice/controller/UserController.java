@@ -89,4 +89,16 @@ public class UserController {
                 ))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok().body(userService.getAll());
+    }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<?> getUserDetailById(@PathVariable Long id) {
+        return userService.getUserById(id)
+                .map(u -> ResponseEntity.ok(UserDetailResponse.fromUserEntity(u)))
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
