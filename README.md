@@ -1,10 +1,18 @@
-***Real Estate Project***
+**Real Estate Project**
 
-*Team: TTD*
-
+Team: TTD
 -   Si Duy Truong
 -   Minh Toan Nguyen
 -   Dinh Trung Tran
+
+For the final project, we applied the Microservices Architecture, it’s including:
+-   Separate our monolithic to microservices.
+-   Build the API gateway to manage the domain business.
+-   Using configuration service to store all the settings of all services.
+-   Separate database following the microservice architecture.
+-   Build core to avoid duplicated code between service with service.
+-   Using RappitMQ to push message for notification service.
+-   Using FeignClient to communicate service with service.
 
 | **Functional Requirements**                                                                                                                                          | **Status** |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
