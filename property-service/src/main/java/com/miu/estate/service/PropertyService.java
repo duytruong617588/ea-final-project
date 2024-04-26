@@ -12,6 +12,7 @@ import com.miu.estate.repository.PropertyRepository;
 //import com.miu.estate.repository.UserRepository;
 import com.miu.estate.repository.ReviewRepository;
 import com.ttd.core.model.User;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +29,7 @@ public class PropertyService {
 	private final ImageRepository imageRepository;
 	private final UserClient userClient;
 	private final ReviewRepository reviewRepository;
+	private final HttpServletRequest request;
 
 	public List<PropertyResponse> getAll(Pageable pageRequest) {
 		List<PropertyResponse> propertyResponses = new ArrayList<>();
@@ -57,7 +59,7 @@ public class PropertyService {
 	}
 
 	public Optional<Property> create(CreatePropertyRequest p) {
-		User user = userClient.getUserByToken();
+		User user = userClient.getUserByToken(request.getHeader("Authorization"));
 		Property property = new Property();
 		property.setLocation(p.getLocation());
 		property.setPrice(p.getPrice());
@@ -76,12 +78,20 @@ public class PropertyService {
 		return Optional.of(propertyRepository.save(property));
 	}
 
-	public Optional<Property> getOne(Long id) {
-		return propertyRepository.findById(id);
+	public Optional<PropertyResponse> getOne(Long id) {
+		Property property = propertyRepository.findById(id).orElse(null);
+		if (property == null) {
+			return Optional.empty();
+		}
+		User owner = userClient.getUserDetailById(property.getUserId());
+		List<Image> images = imageRepository.findByPropertyId(property.getId());
+		List<Review> reviews = reviewRepository.findByPropertyId(property.getId());
+		PropertyResponse propertyResponse = PropertyResponse.getPropertyResponse(images, property, owner, reviews);
+		return Optional.of(propertyResponse);
 	}
 
 	public Optional<Property> update(Long id, CreatePropertyRequest p) {
-		User user = userClient.getUserByToken();
+		User user = userClient.getUserByToken(request.getHeader("Authorization"));
 		if (user == null) {
 			throw new PropertyNotFoundException("User not found!");
 		}
@@ -119,7 +129,8 @@ public class PropertyService {
 	}
 
 	public List<User> getUsers() {
-		return userClient.getAllUsers();
+		System.out.println(request.getHeader("Authorization"));
+		return userClient.getUsers(request.getHeader("Authorization"));
 	}
 
 	public Property changePublishStatusProperty(Long id, String status) {

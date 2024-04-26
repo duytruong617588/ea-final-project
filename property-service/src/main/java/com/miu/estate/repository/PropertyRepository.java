@@ -17,6 +17,7 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
     List<Property> findAllByDeletedAtIsNull();
 
     @Modifying
+    @Transactional
     @Query(value = "UPDATE properties SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?1", nativeQuery = true)
     void softDeletePropertyById(Long id);
 
